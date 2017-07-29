@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="css/main.css" />
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>div{padding: 10px;font-size:16px;}</style>
-<title>09ログイン</title>
+<title>ログイン</title>
 </head>
 <body>
 
@@ -16,7 +16,6 @@
     <div class="container-fluid">
         <div class="navbar-header">
         <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
         <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
         <?php
             if(
@@ -42,6 +41,7 @@
      <label>PW:<input type="password" name="lpw"></label><br>
      <input type="submit" value="LOGIN">
     </fieldset>
+    <a class="navbar-brand" href="registration.php">ユーザー登録がまだの方</a>
   </div>
 </form>
 

@@ -40,15 +40,12 @@ if($status==false){
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>09POSTデータ登録</title>
+　<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鹿島学園イラスト部</title>
   <link rel="stylesheet" href="">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <style>div{padding: 10px;font-size:16px;}</style>
-  <style>
-      .aaa {
-          color: red;
-      }
-</style>
+  <link rel="stylesheet" href="css/main.css">
+
 </head>
 <body>
 
@@ -62,9 +59,7 @@ if($status==false){
     <div class="container-fluid">
         <div class="navbar-header">
         <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
-
-       <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
+        <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
         
 <!--        管理者のユーザー管理表示-->
 <!--
@@ -87,9 +82,10 @@ if($status==false){
             ) {
         ?>
             <a class="navbar-brand" href="login.php">ログイン</a>
+            <a class="navbar-brand" href="registration.php">ユーザー登録</a>            
         <?php } else { ?>
             <a class="navbar-brand" href="logout.php">ログアウト</a>
-            <a class="navbar-brand" href="logout.php">
+            <a class="navbar-brand" href="">
                <?php
                 echo 'ようこそ ', $_SESSION['name'], ' さん';
                 ?>
@@ -103,26 +99,33 @@ if($status==false){
 
 
 <!-- Main[Start] -->
-<table>
-
-    <div class="container jumbotron">
-    <p>登録書籍一覧</p>
-    <?php foreach ($data as $key => $value): ?>
-        <p>
-          <a href="opendetail.php?id=<?=$value['id'];?>">
-           <img src="<?=$value["img"]?>" width="100">
-            <?=h($value['bookname']) . '  [' . h($value['manthday']) . ']'?>
-          </a>
-          &nbsp;
-          <a href="opendetail.php?id=<?=$value['id']; ?>">
-            [いいね]
-          </a>
-        </p>
-      <?php endforeach; ?>
+<!-- work section -->
+<div class="container jumbotron">
+<p>登録書籍一覧</p>
+<section id="works" class="works section no-padding">
+    <div class="container-fluid">
+        <div class="row no-gutter">
+        <?php foreach ($data as $key => $value): ?>
+            <div class="col-lg-3 col-md-4 col-sm-4 work">
+                <a href="opendetail.php?id=<?=$value['id'];?>" class="work-box">
+                    <img src="<?=$value["img"]?>" alt="">        
     
-    
+                    <div class="overlay">
+                        <div class="overlay-caption">
+                            <h3><?=h($value['bookname'])?></h3>
+                            <p><?='[' . h($value['manthday']) . ']'?></p>
+                            <a href="opendetail.php?id=<?=$value['id']; ?>"> [いいね] </a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <?php endforeach; ?>
+        </div>
     </div>
-</table>
+</section>
+    </div>
+<!-- work section --> 
+
 <!-- Main[End] -->
 
 

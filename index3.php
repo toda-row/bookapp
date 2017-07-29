@@ -45,7 +45,7 @@ if($status==false){
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/flexslider.css">
 <link rel="stylesheet" href="css/jquery.fancybox.css">
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/main2.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="css/font-icon.css">
 <link rel="stylesheet" href="css/animate.min.css">
@@ -108,28 +108,25 @@ if($status==false){
 <div class="container jumbotron">
 <p>登録書籍一覧</p>
 <section id="works" class="works section no-padding">
-  <div class="container-fluid">
-    <div class="row no-gutter">
-     <?php foreach ($data as $key => $value): ?>
-      <div class="col-lg-3 col-md-6 col-sm-6 work">
-      <a href="opendetail.php?id=<?=$value['id'];?>" class="work-box">
-      <img src="<?=$value["img"]?>" alt="" width="200px" height="200px">        
+    <div class="container-fluid">
+        <div class="row no-gutter">
+        <?php foreach ($data as $key => $value): ?>
+            <div class="col-lg-3 col-md-4 col-sm-4 work">
+                <a href="opendetail.php?id=<?=$value['id'];?>" class="work-box">
+                    <img src="<?=$value["img"]?>" alt="">        
     
-        <div class="overlay">
-          <div class="overlay-caption">
-            <h5><?=h($value['bookname'])?></h5>
-            <p><?='[' . h($value['manthday']) . ']'?></p>
-            <a href="opendetail.php?id=<?=$value['id']; ?>">
-            [いいね] 
-            </a>
-
-          </div>
+                    <div class="overlay">
+                        <div class="overlay-caption">
+                            <h3><?=h($value['bookname'])?></h3>
+                            <p><?='[' . h($value['manthday']) . ']'?></p>
+                            <a href="opendetail.php?id=<?=$value['id']; ?>"> [いいね] </a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <?php endforeach; ?>
         </div>
-    </a>
-      </div>
-    <?php endforeach; ?>
     </div>
-  </div>
 </section>
     </div>
 <!-- work section --> 

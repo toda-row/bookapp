@@ -28,10 +28,19 @@
 
 １４：公開、編集中を選べる
 
-１５：GIT管理する
+＃１５：GIT管理する
+git init
+git add .
+git commit -m "<コミットメッセージ>"
+git remote add origin gir@github.com:git@github.com:toda-row/bookapp.git
+git commit
+git push -u origin master
 
 ＋α
 募金できるように
+
+参考
+http://designstub.com/demos/lexis/
 
 
 

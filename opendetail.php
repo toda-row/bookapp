@@ -59,11 +59,11 @@ if($status==false){
   <div class="jumbotron">
    <fieldset>
     <legend>本をブックマークする</legend>
-     <label>書籍名：<input type="text" name="bookname" value="<?=$row["bookname"]?>"></label><br>
-     <label>書籍URL：<input type="text" name="bookurl" value="<?=$row["bookurl"]?>"></label><br>
-     <label><textArea name="comment" rows="4" cols="40"><?=$row["comment"]?></textArea></label><br>
-     <img src="<?=$row["img"]?>" width="100"><br>
-     <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
+        <label>書籍名：<input type="text" name="bookname" value="<?=$row["bookname"]?>"></label><br>
+        <img src="<?=$row["img"]?>" width="300px"><br>
+        <label>書籍URL：<input type="text" name="bookurl" value="<?=$row["bookurl"]?>"></label><br>
+        <label><textArea name="comment" rows="4" cols="40"><?=$row["comment"]?></textArea></label><br>
+        <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
 
     </fieldset>
   </div>
