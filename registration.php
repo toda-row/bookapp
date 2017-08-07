@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="css/main.css" />
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>div{padding: 10px;font-size:16px;}</style>
-<title>09ログイン</title>
+<title>ユーザー登録</title>
 </head>
 <body>
 
@@ -27,13 +27,14 @@
 
 <!-- lLOGINogin_act.php は認証処理用のPHPです。 -->
 <!-- Main[Start] -->
-<form method="post" action="insertuser.php">
+<form method="post" action="insertuser.1.php">
   <div class="container jumbotron">
    <fieldset>
     <legend>新規ユーザー登録する</legend>
-     <label>ユーザー名：<input type="text" name="name"></label><br>
-     <label>ログインID：<input type="text" name="lid"></label><br>
-     <label>ログインPASS：<input type="text" name="lpw"></label><br>
+     <label>生徒本名：<input type="text" name="studentname"></label><br>
+     <label>所属キャンパス：<input type="text" name="campus"></label><br>
+     <label>メールアドレス：<input type="text" name="email"></label><br>
+     <label>ログインPASS自動発行：<input type="text" name="lpw"></label><br>
      <input type="submit" value="送信">
     </fieldset>
   </div>

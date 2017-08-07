@@ -2,6 +2,18 @@
 
 session_start();
 
+header("Content-type: text/html; charset=utf-8");
+ 
+if(empty($_POST)) {
+	header("Location: pdo_search_form.html");
+	exit();
+}else{
+	//名前入力判定
+	if (!isset($_POST['search'])  || $_POST['search'] === "" ){
+		$errors['name'] = "名前が入力されていません。";
+	}
+}
+ 
 //1.  DB接続します
 include("functions.php");
 //1.POSTでParamを取得
@@ -9,28 +21,32 @@ include("functions.php");
 //2.DB接続など
 $pdo = db_con();
 
-//２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM kashimawork_table");
 
-//baintvalue で検索
+		$statement = $pdo->prepare("SELECT * FROM kashimawork_table WHERE workname LIKE (:workname) ");
+	
+		if($statement){
+			$search = $_POST['search'];
+			$like_search = "%".$search."%";
+			//プレースホルダへ実際の値を設定する
+			$statement->bindValue(':workname', $like_search, PDO::PARAM_STR);
+			
+			if($statement->execute()){
+				//レコード件数取得
+				$row_count = $statement->rowCount();
+				
+				while($row = $statement->fetch()){
+					$rows[] = $row;
+				}
+				
+			}else{
+				$errors['error'] = "検索失敗しました。";
+			}
+			
+			//データベース接続切断
+			$dbh = null;	
+		}
+	
 
-$status = $stmt->execute();
-
-//３．データ表示
-$view="";
-if($status==false){
-  //execute（SQL実行時にエラーがある場合）
-  $error = $stmt->errorInfo();
-  exit("ErrorQuery:".$error[2]);
-
-}else{
-  //Selectデータの数だけ自動でループしてくれる
-  while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-
-   $data[] = $result;
-  }
-
-}
 
 
 ?>
@@ -109,30 +125,36 @@ if($status==false){
 <!-- Main[Start] -->
 <!-- work section -->
 <div class="container jumbotron">
-
-<p>登録作品一覧</p>
-<section id="works" class="works section no-padding">
-    <div class="container-fluid">
-        <div class="row no-gutter">
-        <?php foreach ((array) $data as $key => $value): ?>
-            <div class="col-lg-3 col-md-4 col-sm-4 work">
-                <a href="opendetail.php?id=<?=$value['id'];?>" class="work-box">
-                    <img src="<?=$value["img"]?>" alt="">        
-    
-                    <div class="overlay">
-                        <div class="overlay-caption">
-                            <h3><?=h($value['workname'])?></h3>
-                            <p><?='[' . h($value['manthday']) . ']'?></p>
-                            <p><?='[' . h($value['workowner']) . ']'?></p>
-                            <a href="opendetail.php?id=<?=$value['id']; ?>"> [いいね] </a>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        <?php endforeach; ?>
-        </div>
-    </div>
-</section>
+<?php if (count($errors) === 0): ?>
+ 
+<p><?="『　".htmlspecialchars($search, ENT_QUOTES, 'UTF-8')."　』で検索しました。"?></p>
+<p><?=$row_count?>件です。</p>
+ 
+<table class="table table-hover" >
+<tr><td>作品画像</td><td>作品名</td><td>作者</td></tr>
+ 
+<?php 
+foreach($rows as $row){
+?> 
+<tr> 
+    <a href="opendetail.php?id=<?=$row['id'];?>" >
+	<td><img src="<?=$row["img"]?>"  width="100"> </td> 
+	<td><?=htmlspecialchars($row['workname'],ENT_QUOTES,'UTF-8')?></td> 
+	<td><?=htmlspecialchars($row['workowner'],ENT_QUOTES,'UTF-8')?></td> 
+	</a>
+</tr> 
+<?php 
+} 
+?>
+ 
+<?php elseif(count($errors) > 0): ?>
+<?php
+foreach($errors as $value){
+	echo "<p>".$value."</p>";
+}
+?>
+<?php endif; ?>
+ 
     </div>
 <!-- work section --> 
 

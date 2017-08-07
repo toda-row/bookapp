@@ -36,6 +36,9 @@ git remote add origin gir@github.com:git@github.com:toda-row/bookapp.git
 git commit
 git push -u origin master
 
+
+１６：作品がNULLのときのバグ
+
 ＋α
 募金できるように
 
@@ -43,5 +46,32 @@ git push -u origin master
 http://designstub.com/demos/lexis/
 
 
+
+echo "# Mr.sakiyama" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:toda-row/Mr.sakiyama.git
+git push -u origin master
+
+
+１段階
+所属キャンパス
+本名
+メールアドレス
+パスワード自動　メールも自動送信
+
+２段階
+検索
+いいね
+PV
+
+３段階
+掲示板
+お知らせ
+表彰
+ランキング(いいね、PV)
+
+https://kashimaweb-todarow.c9users.io/phpmyadmin/index.php
 
 

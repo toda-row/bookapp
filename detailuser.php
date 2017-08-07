@@ -4,16 +4,18 @@ session_start();
 
 //2. DB接続します
 include("functions.php");
-//1.POSTでParamを取得
-$id = $_GET["id"];
+
+$studentname = $_SESSION["studentname"];
+
+// var_dump($id);
 
 //2.DB接続など
 $pdo = db_con();
 
 
 //３．データ登録SQL変更
-$stmt = $pdo->prepare("SELECT * FROM gs_user_table WHERE id=:id");
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
+$stmt = $pdo->prepare("SELECT * FROM kashimauser_table WHERE studentname=:studentname");
+$stmt->bindValue(':studentname', $studentname, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $status = $stmt->execute(); //executeは実行
 
 //データ表示
@@ -52,13 +54,18 @@ if($status==false){
 
 <!-- Main[Start] -->
 <form method="post" action="updateuser.php">
- <input type="hidden" name="id" value="<?=$id?>">
+ <input type="hidden" name="id" value="<?=$studentname?>">
   <div class="jumbotron">
    <fieldset>
-    <legend>ユーザーの編集をする</legend>
-     <label>ユーザー名：<input type="text" name="name" value="<?=$row["name"]?>"></label><br>
-     <label>ユーザーID：<input type="text" name="lid" value="<?=$row["lid"]?>"></label><br>
-     <label>ユーザーPASS：<input type="text" name="lpw" value="<?=$row["lpw"]?>"></label><br>
+    <legend>プロフィールを編集する</legend>
+    <p>基本情報（変更不可）</p>
+     <label>本名：<input type="text" name="studentname" value="<?=$row["studentname"]?>"></label><br>
+     <label>キャンパス名：<input type="text" name="campus" value="<?=$row["campus"]?>"></label><br>
+    <p>基本情報（変更可能）</p>
+     <label>パスワード：<input type="text" name="lpw" value="<?=$row["lpw"]?>"></label><br>
+     <label>MAIL：<input type="text" name="email" value="<?=$row["email"]?>"></label><br>
+     <label>ニックネーム（表示名）：<input type="text" name="nickname" value="<?=$row["nickname"]?>"></label><br>
+     <label>画像：<input type="text" name="lpw" value="<?=$row["lpw"]?>"></label><br>
      <input type="submit" value="送信">
     </fieldset>
   </div>

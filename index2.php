@@ -9,7 +9,7 @@ include("functions.php");
 $pdo = db_con();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_bm_table");
+$stmt = $pdo->prepare("SELECT * FROM kashimawork_table");
 
 //baintvalue で検索
 
@@ -117,7 +117,7 @@ if($status==false){
     
         <div class="overlay">
           <div class="overlay-caption">
-            <h5><?=h($value['bookname'])?></h5>
+            <h5><?=h($value['workname'])?></h5>
             <p><?='[' . h($value['manthday']) . ']'?></p>
             <a href="opendetail.php?id=<?=$value['id']; ?>">
             [いいね] 

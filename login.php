@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
         <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
+        <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
         <?php
             if(
                 !isset($_SESSION["chk_ssid"]) || $_SESSION["chk_ssid"]!=session_id()
@@ -37,7 +37,7 @@
   <div class="container jumbotron">
    <fieldset>
     <legend>ログインする</legend>
-     <label>ID:<input type="text" name="lid"></label><br>
+     <label>ID（MAIL）:<input type="text" name="email"></label><br>
      <label>PW:<input type="password" name="lpw"></label><br>
      <input type="submit" value="LOGIN">
     </fieldset>

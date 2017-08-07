@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 //1.  DB接続します
@@ -9,7 +10,7 @@ include("functions.php");
 $pdo = db_con();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_bm_table");
+$stmt = $pdo->prepare("SELECT * FROM kashimawork_table");
 
 //baintvalue で検索
 
@@ -25,9 +26,9 @@ if($status==false){
 }else{
   //Selectデータの数だけ自動でループしてくれる
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-      
+
    $data[] = $result;
-      }
+  }
 
 }
 
@@ -39,17 +40,11 @@ if($status==false){
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>09POSTデータ登録</title>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/flexslider.css">
-<link rel="stylesheet" href="css/jquery.fancybox.css">
-<link rel="stylesheet" href="css/main2.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/font-icon.css">
-<link rel="stylesheet" href="css/animate.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+　<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鹿島学園イラスト部</title>
+  <link rel="stylesheet" href="">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
 
 </head>
 <body>
@@ -64,9 +59,11 @@ if($status==false){
     <div class="container-fluid">
         <div class="navbar-header">
         <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
+        <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
+        <a class="navbar-brand" href="selectbook.php">お知らせ</a>
+        <a class="navbar-brand" href="pdo_search_form.html">検索</a>
+        
 
-       <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
         
 <!--        管理者のユーザー管理表示-->
 <!--
@@ -75,7 +72,7 @@ if($status==false){
                 $_SESSION['kanri_flg']==1
             ) {
         ?>
-        <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
+
         <?php } else { ?>
             空白
         <?php } ?>
@@ -89,24 +86,30 @@ if($status==false){
             ) {
         ?>
             <a class="navbar-brand" href="login.php">ログイン</a>
+            <a class="navbar-brand" href="registration.php">ユーザー登録</a>            
         <?php } else { ?>
             <a class="navbar-brand" href="logout.php">ログアウト</a>
-            <a class="navbar-brand" href="logout.php">
+            <a class="navbar-brand" href="">
                <?php
-                echo 'ようこそ ', $_SESSION['name'], ' さん';
+                echo 'ようこそ ', $_SESSION['nickname'], ' さん';
                 ?>
             </a>
         <?php } ?>
 <!--        ユーザーのログイン・ログアウト表示-->
+<form class="navbar-brand"  action="searchresult.php" method="post">
+<input type="text" name="search">
+<input type="submit" value="検索">
+</form>
         </div>
     </div>
   </nav>
 </header>
 
+
 <!-- Main[Start] -->
 <!-- work section -->
 <div class="container jumbotron">
-<p>登録書籍一覧</p>
+<p>登録作品一覧</p>
 <section id="works" class="works section no-padding">
     <div class="container-fluid">
         <div class="row no-gutter">
@@ -117,8 +120,9 @@ if($status==false){
     
                     <div class="overlay">
                         <div class="overlay-caption">
-                            <h3><?=h($value['bookname'])?></h3>
+                            <h3><?=h($value['workname'])?></h3>
                             <p><?='[' . h($value['manthday']) . ']'?></p>
+                            <p><?='[' . h($value['workowner']) . ']'?></p>
                             <a href="opendetail.php?id=<?=$value['id']; ?>"> [いいね] </a>
                         </div>
                     </div>
@@ -133,15 +137,6 @@ if($status==false){
 
 <!-- Main[End] -->
 
-<!-- JS FILES -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/jquery.flexslider-min.js"></script> 
-<script src="js/jquery.fancybox.pack.js"></script> 
-<script src="js/retina.min.js"></script> 
-<script src="js/modernizr.js"></script> 
-<script src="js/main.js"></script> 
-<script type="text/javascript" src="js/jquery.contact.js"></script>
 
 </body>
 </html>

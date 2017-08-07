@@ -7,12 +7,13 @@ include("functions.php");
 //1.POSTでParamを取得
 $id = $_GET["id"];
 
+
 //2.DB接続など
 $pdo = db_con();
 
 
 //３．データ登録SQL変更
-$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE id=:id");
+$stmt = $pdo->prepare("SELECT * FROM kashimawork_table WHERE id=:id");
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
 $status = $stmt->execute(); //executeは実行
 
@@ -47,7 +48,7 @@ if($status==false){
         <div class="navbar-header">
         <a class="navbar-brand" href="index.php">トップ</a>
         <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
-        <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
+        <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
 
         <?php
             if(
@@ -69,14 +70,13 @@ if($status==false){
  <input type="hidden" name="id" value="<?=$id?>">
   <div class="container jumbotron">
    <fieldset>
-    <legend>本をブックマークする</legend>
-     <label>書籍名：<input type="text" name="bookname" value="<?=$row["bookname"]?>"></label><br>
-     <label>書籍URL：<input type="text" name="bookurl" value="<?=$row["bookurl"]?>"></label><br>
+    <legend>作品を編集する</legend>
+     <label>作品名：<input type="text" name="workname" value="<?=$row["workname"]?>"></label><br>
      <label><textArea name="comment" rows="4" cols="40"><?=$row["comment"]?></textArea></label><br>
      <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
      <img src="<?=$row["img"]?>" width="100">
      
-     <input type="file" name="filename"><br>
+     <input type="file" name="filename" src="<?=$row["img"]?>"><br>
      <input type="submit" value="送信">
     </fieldset>
   </div>

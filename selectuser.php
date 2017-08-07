@@ -11,7 +11,7 @@ include("functions.php");
 $pdo = db_con();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_user_table");
+$stmt = $pdo->prepare("SELECT * FROM kashimauser_table");
 
 //baintvalue で検索
 
@@ -27,23 +27,7 @@ if($status==false){
 }else{
   //Selectデータの数だけ自動でループしてくれる
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-    $view .='<p>';//.=は追加処理＋＝と一緒
-    $view .='<a href="detailuser.php?id='.$result["id"].'">';
-    $view .= ' '; 
-    $view .= $result["id"];
-    $view .= ' ';
-    $view .= $result["name"];
-    $view .= ' ';
-    $view .= $result["lid"];
-    $view .= ' ';
-    $view .= $result["lpw"];
-    $view .= ' ';
-    $view .= $result["date"];
-    $view .='</a>';
-    $view .= '<a href="deleteuser.php?id='.$result["id"].'">'; 
-    $view .= ' [削除] '; 
-    $view .= '</a>'; 
-    $view .='</p>';
+    $data[] = $result;
   }
 
 }
@@ -56,20 +40,21 @@ if($status==false){
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>09ユーザーの一覧</title>
+<title>生徒の一覧</title>
 <link rel="stylesheet" href="css/range.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<style>div{padding: 10px;font-size:16px;}</style>
+
 </head>
 <body id="main">
+  
 <!-- Head[Start] -->
 <header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
               <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
-        <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
+        <a class="navbar-brand" href="selectuser.php">生徒の一覧</a>
+        <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
         <?php
             if(
                 !isset($_SESSION["chk_ssid"]) || $_SESSION["chk_ssid"]!=session_id()
@@ -86,10 +71,44 @@ if($status==false){
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<table>
-    <div class="container jumbotron"><?=$view?></div>
+
+
+
+<div class="container jumbotron">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>生徒本名</th>
+            <th>キャンパス名</th>
+            <th>パスワード</th>
+            <th>MAIL</th>
+            <th>ニックネーム</th>
+            <th>登録日</th>
+            <th>編集</th>
+            <th>削除</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($data as $key => $value): ?>
+        <tr>
+            <th><?=h($value['studentname'])?></th>
+            <td><?=h($value['campus'])?></td>
+            <td><?=h($value['lpw'])?></td>
+            <td><?=h($value['email'])?></td>
+            <td><?=h($value['nickname'])?></td>
+            <td><?=h($value['date'])?></td>
+            <td><a href="detailuser.php?id=<?=$value['id']; ?>"> 編集 </a></td>
+            <td><a href="deleteuser.php?id='.$result["id"].'"> 削除 </a></td>
+        </tr>
+      <?php endforeach; ?>
+
+    </tbody>
 </table>
+</div>
+
 <!-- Main[End] -->
+
+
 
 </body>
 </html>

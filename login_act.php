@@ -8,8 +8,8 @@ include("functions.php");
 $pdo = db_con();
 
 //2. データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_user_table WHERE lid=:lid AND lpw=:lpw AND life_flg=0");
-$stmt->bindValue(':lid', $_POST["lid"]);
+$stmt = $pdo->prepare("SELECT * FROM kashimauser_table WHERE email=:email AND lpw=:lpw AND life_flg=0");
+$stmt->bindValue(':email', $_POST["email"]);
 $stmt->bindValue(':lpw', $_POST["lpw"]);
 $res = $stmt->execute();
 
@@ -27,7 +27,9 @@ if( $val["id"] != "" ){
   $_SESSION["chk_ssid"]  = session_id();
   $_SESSION["anything"]  = $val["id"];
   $_SESSION["kanri_flg"] = $val['kanri_flg'];
-  $_SESSION["name"]      = $val['name'];
+  $_SESSION["nickname"]  = $val['nickname'];
+  $_SESSION["studentname"]  = $val['studentname'];
+  
   header("LOCATION: selectbook.php");
 }else{
   //logout処理を経由して全画面へ
@@ -35,6 +37,7 @@ if( $val["id"] != "" ){
 }
 
 exit();
+
 ?>
 
 

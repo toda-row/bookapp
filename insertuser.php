@@ -3,8 +3,9 @@ session_start();
 
 //1. POSTデータ取得
 
-$name   = $_POST["name"];
-$lid  = $_POST["lid"];
+$studentname   = $_POST["studentname"];
+$campus = $_POST["campus"];
+$email = $_POST["email"];
 $lpw = $_POST["lpw"];
 
 
@@ -17,12 +18,39 @@ $id = $_GET["id"];
 $pdo = db_con();
 
 
-//３．データ登録SQL作成
-$stmt = $pdo->prepare("INSERT INTO gs_user_table(id, name, lid, lpw, kanri_flg, life_flg, date )VALUES(NULL, :name, :lid, :lpw, 0, 0, sysdate())");
-$stmt->bindValue(':name', $name, PDO::PARAM_STR); 
-$stmt->bindValue(':lid', $lid, PDO::PARAM_STR);
+// ３．データ登録SQL作成
+$stmt = $pdo->prepare("INSERT INTO 
+          kashimauser_table(
+            id,
+            studentname,
+            campus,
+            email,
+            lpw, 
+            kanri_flg, 
+            life_flg, 
+            date,
+            nickname,
+            studentimg
+          )VALUES(
+            NULL,
+            :studentname,
+            :campus,
+            :email,
+            :lpw, 
+            0, 
+            0, 
+            sysdate(),
+            NULL,
+            NULL
+          )");
+          
+$stmt->bindValue(':studentname', $studentname, PDO::PARAM_STR); 
+$stmt->bindValue(':campus', $campus, PDO::PARAM_STR);
+$stmt->bindValue(':email', $email, PDO::PARAM_STR);
 $stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR);
-$status = $stmt->execute(); //executeは実行
+$status = $stmt->execute();
+
+//executeは実行
 
 //４．データ登録処理後
 if($status==false){
@@ -31,8 +59,57 @@ if($status==false){
   exit("QueryError（SQLのエラー）:".$error[2]);
 }else{
   //５．index.phpへリダイレクト
-  header("Location: index.php"); //Location:　のあとに必ずスペースが必要
+  header("Location: index.1.php"); //Location:　のあとに必ずスペースが必要
   exit;
 
 }
+
+// メール処理
+
+$add_header="From:yoshihiro.t.88@gmail.com\r\n";
+$add_header	.= "Reply-to: yoshihiro.t.88@gmail.com\r\n";
+$add_header	.= "X-Mailer: PHP/". phpversion();
+$opt = '-f'.'yoshihiro.t.88@gmail.com'; //-fって何か意味あったんだけど忘れました　-fすると迷惑メールになりにくいとか、そんなことだったと思う。
+
+//以下ヒアドキュメント<<<●●　HTMLでも、文字列でも、何いれてもOK●●;
+//ヒアドキュメントは、メール送信とかの定型文を書いたりするとき、あとはSQLを書くときも使うかな。
+//ヒアドキュメント内ではPHPのプログラムは一切かけない。変数だけ。変数は{}で囲ってあげること
+//メールの本文をここでひとまとめに。
+$message =<<<HTML
+お問い合わせ内容の確認です。
+
+お名前
+{$_SESSION['studentname']}
+
+キャンパス名
+{$_SESSION['campus']}
+
+E_mail
+{$_SESSION['email']}
+
+パスワード
+{$_SESSION['lpw']}
+
+登録完了しました。
+こちらからログインしてください。
+
+HTML;
+
+// カレントの言語を日本語に設定する
+mb_language("ja");
+// 内部文字エンコードを設定する　このエンコード指定は大昔の携帯だとShift-jisにしないとだめだったとか。
+// 今はUTF-8にしておけばだいたいOKだから、楽な時代になったもんだよ。
+mb_internal_encoding("UTF-8");
+
+mb_send_mail($_SESSION['email'],"【お問い合わせ】確認メール",$message,$add_header,$opt);
+//mb_send_mailは5つの設定項目がある
+//mb_send_mail(送信先メールアドレス,"メールのタイトル","メール本文","メールのヘッダーFromとかリプライとか","送信エラーを送るメールアドレス");
+//5番目の情報は第5引数と呼ばれるものでして、これがないと迷惑メール扱いになることも。
+
+
+
+//マスター管理者にも同じメールを送りつける！！
+mb_send_mail('yoshihiro.t.88@gmail.com',"登録がありました",$message,$add_header,$opt);
+
+
 ?>

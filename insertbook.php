@@ -4,19 +4,18 @@ session_start();
 include("functions.php");
 //入力チェック(受信確認処理追加)
 if(
-  !isset($_POST["bookname"]) || $_POST["bookname"]=="" ||
-  !isset($_POST["bookurl"]) || $_POST["bookurl"]=="" ||
+  !isset($_POST["workname"]) || $_POST["workname"]=="" ||
   !isset($_POST["comment"]) || $_POST["comment"]==""
 ){
   exit('ParamError');
 }
 
-//1. POSTデータ取得
 
-$bookname   = $_POST["bookname"];
-$bookurl  = $_POST["bookurl"];
+$workname   = $_POST["workname"];
 $comment = $_POST["comment"];
 $userid = $_SESSION["anything"];
+$workowner = $_SESSION["nickname"];
+$studentname = $_SESSION["studentname"];
 
 
 //***FileUpload
@@ -32,43 +31,48 @@ if(isset($_FILES['filename']) && $_FILES['filename']['error']==0){
 }
 
 
-//2. DB接続します
-   $dbname='c9';
-try { //エラー入ったときに
+//2.DB接続など
+$pdo = db_con();
 
-    $pdo = new PDO('mysql:dbname='.$dbname.';charset=utf8;host=127.0.0.1','todarow','todarow12345');
+// //2. DB接続します
+//   $dbname='c9';
+// try { //エラー入ったときに
 
-} catch (PDOException $e) { //受信します
-  exit('DbConnectError:'.$e->getMessage()); //エラー表示
-}
+//     $pdo = new PDO('mysql:dbname='.$dbname.';charset=utf8;host=127.0.0.1','todarow','todarow12345');
+
+// } catch (PDOException $e) { //受信します
+//   exit('DbConnectError:'.$e->getMessage()); //エラー表示
+// }
 
 
 //３．データ登録SQL作成
 $sql = "INSERT
-          INTO gs_bm_table
+          INTO kashimawork_table
                (id,
-                bookname,
-                bookurl,
+                workname,
                 comment,
                 date,
                 img,
-                userid)
+                userid,
+                workowner,
+                studentname)
         VALUES (NULL,
-                :bookname,
-                :bookurl,
+                :workname,
                 :comment,
                 sysdate(),
                 :img,
-                :userid)";
+                :userid,
+                :workowner,
+                :studentname)";
     
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':bookname', $bookname, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':bookurl', $bookurl, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
+$stmt->bindValue(':workname', $workname, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $stmt->bindValue(':comment', $comment, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 
 $stmt->bindValue(':img',$upload_file, PDO::PARAM_STR);
 $stmt->bindValue(':userid',$userid, PDO::PARAM_INT);
-
+$stmt->bindValue(':workowner',$workowner, PDO::PARAM_STR);
+$stmt->bindValue(':studentname',$studentname, PDO::PARAM_STR);
 
 $status = $stmt->execute(); //executeは実行
 

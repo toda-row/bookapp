@@ -12,7 +12,7 @@ $pdo = db_con();
 
 
 //データ登録SQL削除
-$delete = $pdo->prepare("DELETE FROM gs_user_table WHERE id=:id");
+$delete = $pdo->prepare("DELETE FROM kashimauser_table WHERE id=:id");
 $delete->bindValue(':id', $id, PDO::PARAM_INT);
 $status = $delete->execute(); //executeは実行
 
