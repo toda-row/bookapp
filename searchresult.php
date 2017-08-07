@@ -10,7 +10,7 @@ if(empty($_POST)) {
 }else{
 	//名前入力判定
 	if (!isset($_POST['search'])  || $_POST['search'] === "" ){
-		$errors['name'] = "名前が入力されていません。";
+		$errors['search'] = "名前が入力されていません。";
 	}
 }
  
@@ -134,7 +134,7 @@ $pdo = db_con();
 <tr><td>作品画像</td><td>作品名</td><td>作者</td></tr>
  
 <?php 
-foreach($rows as $row){
+foreach((array)$rows as $row){
 ?> 
 <tr> 
     <a href="opendetail.php?id=<?=$row['id'];?>" >

@@ -18,6 +18,7 @@ $stmt2 = $pdo->prepare($sql2);
 $stmt2->bindValue(':userid', $hensu);
 //baintvalue で検索
 $status2 = $stmt2->execute();
+
 //３．データ表示
 if($status2==false){
   //execute（SQL実行時にエラーがある場合）

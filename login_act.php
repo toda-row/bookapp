@@ -29,6 +29,7 @@ if( $val["id"] != "" ){
   $_SESSION["kanri_flg"] = $val['kanri_flg'];
   $_SESSION["nickname"]  = $val['nickname'];
   $_SESSION["studentname"]  = $val['studentname'];
+  $_SESSION["campus"]  = $val['campus'];
   
   header("LOCATION: selectbook.php");
 }else{

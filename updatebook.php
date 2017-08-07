@@ -2,7 +2,7 @@
 session_start();
 
 //1. POSTデータ取得
-$id = $_POST["id"];
+$id = $_POST["id"];//作品ID
 $workname = $_POST["workname"];
 $comment = $_POST["comment"];
 //var_dump($_POST);

@@ -5,8 +5,10 @@ session_start();
 //2. DB接続します
 include("functions.php");
 //1.POSTでParamを取得
-$id = $_GET["id"];
+$id = $_GET["id"]; 
+// 作品ID
 
+// var_dump($id);
 //2.DB接続など
 $pdo = db_con();
 
@@ -26,6 +28,23 @@ if($status==false){
 
 }
 
+//掲示板
+$stmt3 = $pdo->prepare("SELECT * FROM kashimaworkboard WHERE workid=:id");
+$stmt3->bindValue(':id', $id, PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
+$status3 = $stmt3->execute(); //executeは実行
+//データ表示
+if($status3==false){
+  //execute（SQL実行時にエラーがある場合）
+  $error = $stmt3->errorInfo();
+  exit("ErrorQuery:".$error[2]);
+}else{
+  //Selectデータの数だけ自動でループしてくれる
+  while( $result2 = $stmt3->fetch(PDO::FETCH_ASSOC)){
+
+   $data[] = $result2;
+  }
+
+}
 
 ?>
 
@@ -47,7 +66,6 @@ if($status==false){
         <a class="navbar-brand" href="index.php">トップ</a>
         <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
         <a class="navbar-brand" href="selectbook.php">お知らせ</a>
-        <a class="navbar-brand" href="pdo_search_form.html">検索</a>
         
 
         
@@ -93,30 +111,48 @@ if($status==false){
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
+  <div class="container jumbotron">
 <form method="post" action="">
- <input type="hidden" name="id" value="<?=$id?>">
-  <div class="jumbotron">
+ <input type="hidden" name="id" value="<?=$id?>">　
    <fieldset>
     <legend>作品詳細</legend>
         <label>作品名：<input type="text" name="workname" value="<?=$row["workname"]?>"></label><br>
         <img src="<?=$row["img"]?>" width="300px"><br>
-        <label>所属学校：<input type="text" name="bookurl" value="<?=$row["bookurl"]?>"></label><br>
-        <label>作者ニックネーム：<input type="text" name="bookurl" value="<?=$row["bookurl"]?>"></label><br>
+        <label>所属学校：<input type="text" name="ownercampus" value="<?=$row["ownercampus"]?>"></label><br>
+        <label>作者ニックネーム：<input type="text" name="workowner" value="<?=$row["workowner"]?>"></label><br>
         <label><textArea name="comment" rows="4" cols="40"><?=$row["comment"]?></textArea></label><br>
         <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
 
     </fieldset>
-    <form method="post" action="insertcomment.php" enctype="multipart/form-data">
+
+    
+
+</form>
+  </div>
+  
+   <div class="container jumbotron">
+    <form method="post" action="insertcomment.php">
+    <input type="hidden" name="id" value="<?=$id?>">　
+         <!--作品IDも一緒に送信-->
     <fieldset>
     <legend>コメントを投稿する</legend>
      <label>コメント<input type="text" name="boardcomment"></label><br>
+
      <input type="submit" value="送信">
     </fieldset>
     </form>
-    
-  </div>
-</form>
+</div>
 <!-- Main[End] -->
+
+<!--掲示板-->
+ <div class="container jumbotron">
+        <p><?=$row["workname"]?>へのコメント</p>
+              <?php foreach ((array) $data as $key => $value): ?>
+                    <p><?=h($value["commentnickname"])?>：<?=h($value["boardcomment"])?></p>
+                    <!--<p><?=h($value["date"])?></p>-->
+              <?php endforeach; ?>
+        
+ </div>
 
 
 </body>

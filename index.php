@@ -61,9 +61,6 @@ if($status==false){
         <a class="navbar-brand" href="index.php">トップ</a>
         <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
         <a class="navbar-brand" href="selectbook.php">お知らせ</a>
-        <a class="navbar-brand" href="pdo_search_form.html">検索</a>
-        
-
         
 <!--        管理者のユーザー管理表示-->
 <!--

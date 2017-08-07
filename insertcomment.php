@@ -5,16 +5,17 @@ session_start();
 include("functions.php");
 //1. POSTデータ取得
 
-if(
-  !isset($_POST["boardcomment"]) || $_POST["boardcomment"]==""
-){
-  exit('ParamError');
-}
+// if(
+//   !isset($_POST["boardcomment"]) || $_POST["boardcomment"]==""
+// ){
+//   exit('ParamError');
+// }
 
 
 $boardcomment  = $_POST["boardcomment"];
 $nickname = $_SESSION["nickname"];
-$id = $_SESSION["id"]; //作品ID
+$id = $_POST["id"]; //作品ID
+$uid = $_SESSION["anything"]; //ログインしたときのユーザーID
 
 var_dump($boardcomment);
 var_dump($nickname);
@@ -33,7 +34,7 @@ $stmt = $pdo->prepare("INSERT INTO
           kashimaworkboard(
             id,
             boardcomment,
-            boardcommentnickname,
+            commentnickname,
             date,
             workid, 
             userid
@@ -43,12 +44,13 @@ $stmt = $pdo->prepare("INSERT INTO
             :nickname,
             sysdate(),
             :id, 
-            :id
+            :uid
           )");
           
 $stmt->bindValue(':boardcomment', $boardcomment, PDO::PARAM_STR); 
 $stmt->bindValue(':nickname', $nickname, PDO::PARAM_STR);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':uid', $uid, PDO::PARAM_INT);
 $status = $stmt->execute();
 
 //executeは実行
@@ -60,7 +62,7 @@ if($status==false){
   exit("QueryError（SQLのエラー）:".$error[2]);
 }else{
   //５．index.phpへリダイレクト
-  header("Location: index.php"); //Location:　のあとに必ずスペースが必要
+  header("Location: opendetail.php?id=$id"); //Location:　のあとに必ずスペースが必要
   exit;
 
 }

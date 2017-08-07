@@ -16,7 +16,10 @@ $comment = $_POST["comment"];
 $userid = $_SESSION["anything"];
 $workowner = $_SESSION["nickname"];
 $studentname = $_SESSION["studentname"];
+$campus = $_SESSION["campus"];
 
+var_dump($campus);
+var_dump($workowner);
 
 //***FileUpload
 if(isset($_FILES['filename']) && $_FILES['filename']['error']==0){
@@ -34,16 +37,6 @@ if(isset($_FILES['filename']) && $_FILES['filename']['error']==0){
 //2.DB接続など
 $pdo = db_con();
 
-// //2. DB接続します
-//   $dbname='c9';
-// try { //エラー入ったときに
-
-//     $pdo = new PDO('mysql:dbname='.$dbname.';charset=utf8;host=127.0.0.1','todarow','todarow12345');
-
-// } catch (PDOException $e) { //受信します
-//   exit('DbConnectError:'.$e->getMessage()); //エラー表示
-// }
-
 
 //３．データ登録SQL作成
 $sql = "INSERT
@@ -54,16 +47,20 @@ $sql = "INSERT
                 date,
                 img,
                 userid,
+                manthday,
                 workowner,
-                studentname)
+                studentname,
+                ownercampus)
         VALUES (NULL,
                 :workname,
                 :comment,
                 sysdate(),
                 :img,
                 :userid,
+                sysdate(),
                 :workowner,
-                :studentname)";
+                :studentname,
+                :campus)";
     
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':workname', $workname, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
@@ -73,6 +70,7 @@ $stmt->bindValue(':img',$upload_file, PDO::PARAM_STR);
 $stmt->bindValue(':userid',$userid, PDO::PARAM_INT);
 $stmt->bindValue(':workowner',$workowner, PDO::PARAM_STR);
 $stmt->bindValue(':studentname',$studentname, PDO::PARAM_STR);
+$stmt->bindValue(':campus',$campus, PDO::PARAM_STR);
 
 $status = $stmt->execute(); //executeは実行
 

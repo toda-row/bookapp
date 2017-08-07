@@ -32,7 +32,7 @@
 git init
 git add .
 git commit -m "<コミットメッセージ>"
-git remote add origin gir@github.com:git@github.com:toda-row/bookapp.git
+git remote add origin git@github.com:toda-row/Mr.sakiyama.git
 git commit
 git push -u origin master
 
