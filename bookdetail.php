@@ -76,7 +76,7 @@ if($status==false){
      <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
      <img src="<?=$row["img"]?>" width="100">
      
-     <input type="file" name="filename" src="<?=$row["img"]?>"><br>
+     <input type="file" name="filename" value="<?=$row["img"]?>"><br>
      <input type="submit" value="送信">
     </fieldset>
   </div>

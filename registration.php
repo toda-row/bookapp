@@ -27,7 +27,7 @@
 
 <!-- lLOGINogin_act.php は認証処理用のPHPです。 -->
 <!-- Main[Start] -->
-<form method="post" action="insertuser.1.php">
+<form method="post" action="insertuser.php">
   <div class="container jumbotron">
    <fieldset>
     <legend>新規ユーザー登録する</legend>

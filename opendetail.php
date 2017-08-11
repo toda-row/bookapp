@@ -122,7 +122,7 @@ if($status3==false){
         <label>作者ニックネーム：<input type="text" name="workowner" value="<?=$row["workowner"]?>"></label><br>
         <label><textArea name="comment" rows="4" cols="40"><?=$row["comment"]?></textArea></label><br>
         <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
-
+        <button type="button" class="btn btn-info">いいね</button>
     </fieldset>
 
     
@@ -150,6 +150,7 @@ if($status3==false){
               <?php foreach ((array) $data as $key => $value): ?>
                     <p><?=h($value["commentnickname"])?>：<?=h($value["boardcomment"])?></p>
                     <!--<p><?=h($value["date"])?></p>-->
+                    <a href="deletecomment.php?id=<?=$value['id']; ?>"> 削除 </a>
               <?php endforeach; ?>
         
  </div>

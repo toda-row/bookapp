@@ -53,9 +53,9 @@ if($status==false){
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<form method="post" action="updateuser.php">
+<form method="post" action="updateuser.php" enctype="multipart/form-data">
  <input type="hidden" name="id" value="<?=$studentname?>">
-  <div class="jumbotron">
+  <div class="container jumbotron">
    <fieldset>
     <legend>プロフィールを編集する</legend>
     <p>基本情報（変更不可）</p>
@@ -65,7 +65,8 @@ if($status==false){
      <label>パスワード：<input type="text" name="lpw" value="<?=$row["lpw"]?>"></label><br>
      <label>MAIL：<input type="text" name="email" value="<?=$row["email"]?>"></label><br>
      <label>ニックネーム（表示名）：<input type="text" name="nickname" value="<?=$row["nickname"]?>"></label><br>
-     <label>画像：<input type="text" name="lpw" value="<?=$row["lpw"]?>"></label><br>
+     <label>画像：<img src="<?=$row["userimg"]?>" width="100">
+     <input type="file" name="studentpict" value="<?=$row["userimg"]?>"></label><br>
      <input type="submit" value="送信">
     </fieldset>
   </div>
