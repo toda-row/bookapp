@@ -91,7 +91,7 @@ if($status==false){
 
 
 <!-- Main[Start] -->
-<form method="post" action="insertbook.php" enctype="multipart/form-data">
+<form method="post" action="insertwork.php" enctype="multipart/form-data">
   <div class="container jumbotron">
    <fieldset>
     <legend>作品を投稿する</legend>
@@ -126,8 +126,8 @@ if($status==false){
                     <td><?=h($value["workname"])?></td>
                     <td><?=h($value["comment"])?></td>
                     <td><?=h($value["date"])?></td>
-                    <td><a href="bookdetail.php?id=<?=$value['id']; ?>"> 編集 </a></td>
-                    <td><a href="deletebook.php?id=<?=$value['id']; ?>"> 削除 </a></td>
+                    <td><a href="detailwork.php?id=<?=$value['id']; ?>"> 編集 </a></td>
+                    <td><a href="deletework.php?id=<?=$value['id']; ?>"> 削除 </a></td>
                 </tr>
               <?php endforeach; ?>
         

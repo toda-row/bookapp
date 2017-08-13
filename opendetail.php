@@ -47,9 +47,10 @@ if($status3==false){
 }
 
 // カウント数取得関数
-function get_count($file) {
-	$filename = 'data/'.$file.'.dat';
+function get_count($voteid) {
+	$filename = 'data/'.$voteid.'.dat';
 	$fp = @fopen($filename, 'r');
+  
 	if ($fp) {
 		$vote = fgets($fp, 9182);
 	} else {
@@ -77,16 +78,16 @@ $(function() {
 		if (allowAjax) {
 			allowAjax = false;
 			$(this).toggleClass('on');
-			var id = $(this).attr('id');
-			$(this).hasClass('on') ? Vote(id, 'plus') : Vote(id, 'minus');
+			var voteid = $(this).attr('id');
+			$(this).hasClass('on') ? Vote(voteid, 'plus') : Vote(voteid, 'minus');
 		}
 	});
 });
-function Vote(id, plus) {
-	cls = $('.' + id);
+function Vote(voteid, plus) {
+	cls = $('.' + voteid);
 	cls_num = Number(cls.html());
 	count = plus == 'minus' ? cls_num - 1 : cls_num + 1;
-	$.post('vote.php', {'file': id, 'count': count}, function(data) {
+	$.post('vote.php', {'file': voteid, 'count': count}, function(data) {
 		if (data == 'success') cls.html(count);
 		setTimeout(function() {
 			allowAjax = true;
@@ -97,57 +98,9 @@ function Vote(id, plus) {
 </head>
 <body>
 
-<!-- Head[Start] -->
-<header>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectbook.php">作品の一覧</a>
-        <a class="navbar-brand" href="selectbook.php">お知らせ</a>
-        
-
-        
-<!--        管理者のユーザー管理表示-->
-<!--
-        <?php
-            if(
-                $_SESSION['kanri_flg']==1
-            ) {
-        ?>
-
-        <?php } else { ?>
-            空白
-        <?php } ?>
--->
-<!--        管理者のユーザー管理表示-->
-
-<!--        ユーザーのログイン・ログアウト表示-->
-        <?php
-            if(
-                !isset($_SESSION["chk_ssid"]) || $_SESSION["chk_ssid"]!=session_id()
-            ) {
-        ?>
-            <a class="navbar-brand" href="login.php">ログイン</a>
-            <a class="navbar-brand" href="registration.php">ユーザー登録</a>            
-        <?php } else { ?>
-            <a class="navbar-brand" href="logout.php">ログアウト</a>
-            <a class="navbar-brand" href="">
-               <?php
-                echo 'ようこそ ', $_SESSION['nickname'], ' さん';
-                ?>
-            </a>
-        <?php } ?>
-<!--        ユーザーのログイン・ログアウト表示-->
-<form class="navbar-brand"  action="searchresult.php" method="post">
-<input type="text" name="search">
-<input type="submit" value="検索">
-</form>
-        </div>
-    </div>
-  </nav>
-</header>
-<!-- Head[End] -->
+<!-- header[Start] -->
+<?php include ('header.php'); ?>
+<!-- header[End] -->
 
 <!-- Main[Start] -->
   <div class="container jumbotron">
@@ -163,7 +116,7 @@ function Vote(id, plus) {
     <!--</form>-->
     <div class="btn_area">
     <button type="button" class="btn btn-info btn_vote" method="post" id="vote_<?=$row["id"]?>">いいね</button>
-    <p class="vote_<?=$row["id"]?>"><?= get_count('vote_$row["id"]') ?></p>
+    <p class="vote_<?=$row["id"]?>"><?= get_count("vote_{$row['id']}") ?></p>
     </div>
   </div>
   

@@ -42,15 +42,9 @@ if($status==false){
 </head>
 <body>
 
-<!-- Head[Start] -->
-<header>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-    <div class="navbar-header"><a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a></div>
-    </div>
-  </nav>
-</header>
-<!-- Head[End] -->
+<!-- header[Start] -->
+<?php include ('header.php'); ?>
+<!-- header[End] -->
 
 <!-- Main[Start] -->
 <form method="post" action="updateuser.php" enctype="multipart/form-data">

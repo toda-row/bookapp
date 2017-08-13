@@ -35,7 +35,7 @@ if($status==false){
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>書籍詳細編集</title>
+  <title>作品詳細編集</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <style>div{padding: 10px;font-size:16px;}</style>
 </head>
@@ -46,7 +46,7 @@ if($status==false){
 <!-- header[End] -->
 
 <!-- Main[Start] -->
-<form method="post" action="updatebook.php" enctype="multipart/form-data">
+<form method="post" action="updatework.php" enctype="multipart/form-data">
  <input type="hidden" name="id" value="<?=$id?>">
   <div class="container jumbotron">
    <fieldset>

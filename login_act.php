@@ -31,7 +31,7 @@ if( $val["id"] != "" ){
   $_SESSION["studentname"]  = $val['studentname'];
   $_SESSION["campus"]  = $val['campus'];
   
-  header("LOCATION: selectbook.php");
+  header("LOCATION: selectwork.php");
 }else{
   //logout処理を経由して全画面へ
   header("LOCATION: login.php");

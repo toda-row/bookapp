@@ -10,20 +10,9 @@
 </head>
 <body>
 
-<!-- Head[Start] -->
-<header>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">トップ</a>
-        <a class="navbar-brand" href="selectuser.php">ユーザーの一覧</a>
-        <a class="navbar-brand" href="selectbook.php">書籍の一覧</a>
-        <a class="navbar-brand" href="login.php">ログイン</a>
-        </div>
-    </div>
-  </nav>
-</header>
-<!-- Head[End] -->
+<!-- header[Start] -->
+<?php include ('header.php'); ?>
+<!-- header[End] -->
 
 <!-- lLOGINogin_act.php は認証処理用のPHPです。 -->
 <!-- Main[Start] -->
