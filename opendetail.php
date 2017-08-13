@@ -46,6 +46,19 @@ if($status3==false){
 
 }
 
+// カウント数取得関数
+function get_count($file) {
+	$filename = 'data/'.$file.'.dat';
+	$fp = @fopen($filename, 'r');
+	if ($fp) {
+		$vote = fgets($fp, 9182);
+	} else {
+		$vote = 0;
+	}
+	return $vote;
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +68,32 @@ if($status3==false){
   <title>鹿島学園イラスト部</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <style>div{padding: 10px;font-size:16px;}</style>
+  <!--<link rel="stylesheet" href="css/style.css">-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(function() {
+	allowAjax = true;
+	$('.btn_vote').click(function() {
+		if (allowAjax) {
+			allowAjax = false;
+			$(this).toggleClass('on');
+			var id = $(this).attr('id');
+			$(this).hasClass('on') ? Vote(id, 'plus') : Vote(id, 'minus');
+		}
+	});
+});
+function Vote(id, plus) {
+	cls = $('.' + id);
+	cls_num = Number(cls.html());
+	count = plus == 'minus' ? cls_num - 1 : cls_num + 1;
+	$.post('vote.php', {'file': id, 'count': count}, function(data) {
+		if (data == 'success') cls.html(count);
+		setTimeout(function() {
+			allowAjax = true;
+		}, 1000);
+	});
+}
+</script>
 </head>
 <body>
 
@@ -112,22 +151,20 @@ if($status3==false){
 
 <!-- Main[Start] -->
   <div class="container jumbotron">
-<form method="post" action="">
- <input type="hidden" name="id" value="<?=$id?>">　
-   <fieldset>
-    <legend>作品詳細</legend>
-        <label>作品名：<input type="text" name="workname" value="<?=$row["workname"]?>"></label><br>
+<!--<form method="post" action="">-->
+    <div class="">
+        <p>作品名：<?=$row["workname"]?></p>
         <img src="<?=$row["img"]?>" width="300px"><br>
-        <label>所属学校：<input type="text" name="ownercampus" value="<?=$row["ownercampus"]?>"></label><br>
-        <label>作者ニックネーム：<input type="text" name="workowner" value="<?=$row["workowner"]?>"></label><br>
-        <label><textArea name="comment" rows="4" cols="40"><?=$row["comment"]?></textArea></label><br>
-        <label>投稿日時：<input type="text" name="date" value="<?=$row["date"]?>"></label><br>
-        <button type="button" class="btn btn-info">いいね</button>
-    </fieldset>
-
-    
-
-</form>
+        <p>所属学校：<?=$row["ownercampus"]?></p>
+        <p>作者ニックネーム：<?=$row["workowner"]?></p>
+        <p>コメント：<?=$row["comment"]?></p>
+        <p>投稿日時：<?=$row["date"]?></p>
+    </div>
+    <!--</form>-->
+    <div class="btn_area">
+    <button type="button" class="btn btn-info btn_vote" method="post" id="vote_<?=$row["id"]?>">いいね</button>
+    <p class="vote_<?=$row["id"]?>"><?= get_count('vote_$row["id"]') ?></p>
+    </div>
   </div>
   
    <div class="container jumbotron">

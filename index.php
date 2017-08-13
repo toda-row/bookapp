@@ -122,6 +122,7 @@ if($status==false){
                             <p><?='[' . h($value['manthday']) . ']'?></p>
                             <p><?='[' . h($value['workowner']) . ']'?></p>
                             <a href="opendetail.php?id=<?=$value['id']; ?>"> [いいね] </a>
+
                         </div>
                     </div>
                 </a>

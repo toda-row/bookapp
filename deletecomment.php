@@ -17,6 +17,9 @@ $delete = $pdo->prepare("DELETE FROM kashimaworkboard WHERE id=:id");
 $delete->bindValue(':id', $id, PDO::PARAM_INT);
 $status = $delete->execute(); //executeは実行
 
+
+
+
 //データ表示
 $view="";
 if($status==false){
@@ -24,7 +27,7 @@ if($status==false){
   $error = $delete->errorInfo();
   exit("ErrorQuery:".$error[2]);
 }else{
-    header("Location: opendetail.php?id=<?=$value['id'];?>");
+    header("Location: opendetail.php?id=$id");
     exit;
 
 }
