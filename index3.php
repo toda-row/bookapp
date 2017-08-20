@@ -51,9 +51,8 @@ function get_count($file) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-　<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>鹿島学園イラスト部</title>
-  <link rel="stylesheet" href="">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -81,27 +80,24 @@ function Vote(id, plus) {
 	});
 }
 </script>
-
 </head>
 <body>
-
-
-<!-- Head[Start] -->
-
-<!-- Head[End] -->
-
+<!-- header[Start] -->
 <?php include ('header.php'); ?>
+<!-- header[End] -->
+
 
 <!-- Main[Start] -->
 <!-- work section -->
 <div class="container jumbotron">
 
+<p><a href="all.php"> 管理機能整理 </a></p>
 <p>登録作品一覧</p>
 <section id="works" class="works section no-padding">
     <div class="container-fluid">
         <div class="row no-gutter">
         <?php foreach ((array) $data as $key => $value): ?>
-            <div class="col-lg-3 col-md-4 col-sm-4 work">
+            <div class="col-lg-3 col-md-3 col-sm-3 work">
                 <a href="opendetail.php?id=<?=$value['id'];?>" class="work-box">
                     <img src="<?=$value["img"]?>" alt="">        
     

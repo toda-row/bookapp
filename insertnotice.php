@@ -3,6 +3,7 @@ session_start();
 
 
 
+
 //. DB接続します
 include("functions.php");
 //1. POSTデータ取得
@@ -24,12 +25,8 @@ include("functions.php");
 // }
 
 
-$boardcomment  = $_POST["boardcomment"];
-$nickname = $_SESSION["nickname"];
-$workid = $_POST["workid"]; //作品ID
-$uid = $_SESSION["anything"]; //ログインしたときのユーザーID
-
-
+$title  = $_POST["title"];
+$article  = $_POST["article"];
 
 
 //1.POSTでParamを取得
@@ -41,26 +38,21 @@ $pdo = db_con();
 
 // ３．データ登録SQL作成
 $stmt = $pdo->prepare("INSERT INTO 
-          kashimaworkboard(
-            comment_id,
-            boardcomment,
-            commentnickname,
-            date,
-            workid, 
-            userid
+          publicboard(
+            id,
+            title,
+            article,
+            date
           )VALUES(
             NULL,
-            :boardcomment,
-            :nickname,
-            sysdate(),
-            :workid, 
-            :uid
+            :title,
+            :article,
+            sysdate()
           )");
           
-$stmt->bindValue(':boardcomment', $boardcomment, PDO::PARAM_STR); 
-$stmt->bindValue(':nickname', $nickname, PDO::PARAM_STR);
-$stmt->bindValue(':workid', $workid, PDO::PARAM_INT);
-$stmt->bindValue(':uid', $uid, PDO::PARAM_INT);
+$stmt->bindValue(':title', $title, PDO::PARAM_STR); 
+$stmt->bindValue(':article', $article, PDO::PARAM_STR);
+
 $status = $stmt->execute();
 
 //executeは実行
@@ -72,7 +64,7 @@ if($status==false){
   exit("QueryError（SQLのエラー）:".$error[2]);
 }else{
   //５．index.phpへリダイレクト
-  header("Location: opendetail.php?id=$workid"); //Location:　のあとに必ずスペースが必要
+  header("Location: noticekanri.php"); //Location:　のあとに必ずスペースが必要
   exit;
 
 }

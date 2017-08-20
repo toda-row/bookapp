@@ -2,6 +2,8 @@
 
 session_start();
 
+
+
 //2. DB接続します
 include("functions.php");
 //1.POSTでParamを取得
@@ -60,6 +62,8 @@ function get_count($voteid) {
 }
 
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -68,8 +72,7 @@ function get_count($voteid) {
   <meta charset="UTF-8">
   <title>鹿島学園イラスト部</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <style>div{padding: 10px;font-size:16px;}</style>
-  <!--<link rel="stylesheet" href="css/style.css">-->
+  <link href="css/main.css" rel="stylesheet" >
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 $(function() {
@@ -102,52 +105,65 @@ function Vote(voteid, plus) {
 <?php include ('header.php'); ?>
 <!-- header[End] -->
 
-<!-- Main[Start] -->
-  <div class="container jumbotron">
-<!--<form method="post" action="">-->
-    <div class="">
-        <p>作品名：<?=$row["workname"]?></p>
-        <img src="<?=$row["img"]?>" width="300px"><br>
-        <p>所属学校：<?=$row["ownercampus"]?></p>
-        <p>作者ニックネーム：<?=$row["workowner"]?></p>
-        <p>コメント：<?=$row["comment"]?></p>
-        <p>投稿日時：<?=$row["date"]?></p>
+<div class="container jumbotron">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 workwindow" >
+            <p>作品名：<?=$row["workname"]?></p>
+            <div class="workimg"><img src="<?=$row["img"]?>"></div>
+            <p class="iinebutton">
+                <button type="button" class="btn btn-info btn_vote" method="post" id="vote_<?=$row["id"]?>">いいね</button>
+                <span class="vote_<?=$row["id"]?>"><?= get_count("vote_{$row['id']}") ?></span>
+            </p>
+        </div>
+        <div class="workdetail">
+            <p>所属学校：<?=$row["ownercampus"]?></p>
+            <p>作者ニックネーム：<?=$row["workowner"]?></p>
+            <p>コメント：<?=$row["comment"]?></p>
+            <p>投稿日時：<?=$row["date"]?></p>
+        </div>
     </div>
-    <!--</form>-->
-    <div class="btn_area">
-    <button type="button" class="btn btn-info btn_vote" method="post" id="vote_<?=$row["id"]?>">いいね</button>
-    <p class="vote_<?=$row["id"]?>"><?= get_count("vote_{$row['id']}") ?></p>
-    </div>
-  </div>
-  
-   <div class="container jumbotron">
-    <form method="post" action="insertcomment.php">
-    <input type="hidden" name="id" value="<?=$id?>">　
-         <!--作品IDも一緒に送信-->
-    <fieldset>
-    <legend>コメントを投稿する</legend>
-     <label>コメント<input type="text" name="boardcomment"></label><br>
 
-     <input type="submit" value="送信">
-    </fieldset>
-    </form>
+    <div class="boardpush">
+        <form method="post" action="insertcomment.php">
+            <input type="hidden" name="workid" value="<?=$id?>"> <!--作品IDも一緒に送信-->
+            <fieldset>
+                <legend>コメントを投稿する</legend>
+                 <label>コメント<input type="text" name="boardcomment"></label>
+                 <input type="submit" value="送信">
+            </fieldset>
+        </form>
+    </div>
+    <div class="boardcontainer"></div>
 </div>
+<!-- Main[Start] -->
+
+  
 <!-- Main[End] -->
 
 <!--掲示板-->
  <div class="container jumbotron">
         <p><?=$row["workname"]?>へのコメント</p>
               <?php foreach ((array) $data as $key => $value): ?>
-                    <p><?=h($value["commentnickname"])?>：<?=h($value["boardcomment"])?></p>
-                    <!--<p><?=h($value["date"])?></p>-->
-                    <a href="deletecomment.php?id=<?=$value['id']; ?>"> 削除 </a>
+                    <p class="comment">
+                        <?=h($value["commentnickname"])?>：<?=h($value["boardcomment"])?>
+                        
+                        <?php
+                            if(
+                                !isset($_SESSION["studentname"]) || $_SESSION["studentname"]!=session_id()
+                            ) {
+                        ?>
+                        
+                        <a href="deletecomment.php?id=<?=$value['comment_id']?>"> 削除 </a>
+                        <?php } else { ?>
+                        <!--空白-->
+                        <?php } ?>
+                    </p>
+                    
               <?php endforeach; ?>
+     
         
  </div>
 
 
 </body>
 </html>
-
-
-

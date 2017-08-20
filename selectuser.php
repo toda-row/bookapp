@@ -42,6 +42,7 @@ if($status==false){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>生徒の一覧</title>
 <link rel="stylesheet" href="css/range.css">
+<link rel="stylesheet" href="css/main.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -50,6 +51,8 @@ if($status==false){
 <!-- header[Start] -->
 <?php include ('header.php'); ?>
 <!-- header[End] -->
+
+
 
 <!-- Main[Start] -->
 
@@ -78,8 +81,8 @@ if($status==false){
             <td><?=h($value['email'])?></td>
             <td><?=h($value['nickname'])?></td>
             <td><?=h($value['date'])?></td>
-            <td><a href="detailuser.php?id=<?=$value['id']; ?>"> 編集 </a></td>
-            <td><a href="deleteuser.php?id='.$result["id"].'"> 削除 </a></td>
+            <td><a href="detailuser.php?id=<?=$value['id']?>"> 編集 </a></td>
+            <td><a href="deleteuser.php?id=<?=$value['id']?>"> 削除 </a></td>
         </tr>
       <?php endforeach; ?>
 

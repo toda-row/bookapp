@@ -4,7 +4,7 @@
         <div class="navbar-header">
         <a class="navbar-brand" href="index.php">トップ</a>
         <a class="navbar-brand" href="selectwork.php">作品の一覧</a>
-        <a class="navbar-brand" href="selectwork.php">お知らせ</a>
+        <a class="navbar-brand" href="notice.php">お知らせ</a>
         
 <!--        管理者のユーザー管理表示-->
 <!--
@@ -12,12 +12,15 @@
             if(
                 $_SESSION['kanri_flg']==1
             ) {
+                
         ?>
+        <a class="navbar-brand" href="selectuser.php">生徒の一覧</a>
+        <a class="navbar-brand" href="noticekanri.php">お知らせ管理</a>
+        <a class="navbar-brand" href="registration.php">生徒の登録</a>
 
         <?php } else { ?>
-            空白
+            <!--空白-->
         <?php } ?>
--->
 <!--        管理者のユーザー管理表示-->
 
 <!--        ユーザーのログイン・ログアウト表示-->
@@ -30,9 +33,10 @@
             <a class="navbar-brand" href="registration.php">ユーザー登録</a>            
         <?php } else { ?>
             <a class="navbar-brand" href="logout.php">ログアウト</a>
+            <a class="navbar-brand" href="detailuser.php">プロフィール編集</a>
             <a class="navbar-brand" href="">
                <?php
-                echo 'ようこそ ', $_SESSION['nickname'], ' さん';
+                echo 'ようこそ ', $_SESSION['nnavbar-brandickname'], ' さん';
                 ?>
             </a>
         <?php } ?>

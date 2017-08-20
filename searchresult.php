@@ -22,13 +22,13 @@ include("functions.php");
 $pdo = db_con();
 
 
-		$statement = $pdo->prepare("SELECT * FROM kashimawork_table WHERE workname LIKE (:workname) ");
+		$statement = $pdo->prepare("SELECT * FROM kashimawork_table WHERE concat(workname, workowner, studentname) LIKE (:search) ");
 	
 		if($statement){
 			$search = $_POST['search'];
 			$like_search = "%".$search."%";
 			//プレースホルダへ実際の値を設定する
-			$statement->bindValue(':workname', $like_search, PDO::PARAM_STR);
+			$statement->bindValue(':search', $like_search, PDO::PARAM_STR);
 			
 			if($statement->execute()){
 				//レコード件数取得
@@ -58,7 +58,7 @@ $pdo = db_con();
   <meta charset="UTF-8">
 　<meta name="viewport" content="width=device-width, initial-scale=1">
   <title>鹿島学園イラスト部</title>
-  <link rel="stylesheet" href="">
+  <link rel="stylesheet" href="css/main.css">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 
@@ -91,7 +91,7 @@ foreach((array)$rows as $row){
 ?> 
 <tr> 
     <a href="opendetail.php?id=<?=$row['id'];?>" >
-	<td><img src="<?=$row["img"]?>"  width="100"> </td> 
+	<td><div class="searchimg"><img src="<?=$row["img"]?>" ></div></td> 
 	<td><?=htmlspecialchars($row['workname'],ENT_QUOTES,'UTF-8')?></td> 
 	<td><?=htmlspecialchars($row['workowner'],ENT_QUOTES,'UTF-8')?></td> 
 	</a>

@@ -5,7 +5,10 @@ session_start();
 $id = $_POST["id"];//作品ID
 $workname = $_POST["workname"];
 $comment = $_POST["comment"];
-//var_dump($_POST);
+$filename = $_POST["filename"];
+
+
+var_dump($filename);
 
 //***FileUpload
 if(isset($_FILES['filename']) && $_FILES['filename']['error']==0){
@@ -26,6 +29,12 @@ include("functions.php");
 //2.DB接続など
 $pdo = db_con();
 
+// 条件分岐　$upload_fileがNULLなら既存のカラムデータを保持
+// if($upload_file['name']==true){ 
+//             $upload_file=$time.$upload_file['name']; 
+//         }else{ 
+//             $upload_file=$db_upload_file; 
+//                 } 
 
 //３．データ登録SQL変更
 $update = $pdo->prepare(

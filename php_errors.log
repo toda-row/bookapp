@@ -18,3 +18,18 @@
 [13-Aug-2017 03:59:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/kashima/test/index.php:0
 [13-Aug-2017 03:59:45 UTC] PHP   2. get_count() /home/ubuntu/workspace/kashima/test/index.php:94
 [13-Aug-2017 03:59:45 UTC] PHP   3. fclose() /home/ubuntu/workspace/kashima/test/index.php:13
+[14-Aug-2017 00:02:15 UTC] PHP Warning:  require_once(/home/ubuntu/workspace/kashima/test/config.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/kashima/test/test.php on line 3
+[14-Aug-2017 00:02:15 UTC] PHP Stack trace:
+[14-Aug-2017 00:02:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/kashima/test/test.php:0
+[14-Aug-2017 00:02:15 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/ubuntu/workspace/kashima/test/config.php' (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/kashima/test/test.php on line 3
+[14-Aug-2017 00:02:15 UTC] PHP Stack trace:
+[14-Aug-2017 00:02:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/kashima/test/test.php:0
+[14-Aug-2017 00:03:24 UTC] PHP Warning:  include(functions.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/kashima/test/test.php on line 6
+[14-Aug-2017 00:03:24 UTC] PHP Stack trace:
+[14-Aug-2017 00:03:24 UTC] PHP   1. {main}() /home/ubuntu/workspace/kashima/test/test.php:0
+[14-Aug-2017 00:03:24 UTC] PHP Warning:  include(): Failed opening 'functions.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/kashima/test/test.php on line 6
+[14-Aug-2017 00:03:24 UTC] PHP Stack trace:
+[14-Aug-2017 00:03:24 UTC] PHP   1. {main}() /home/ubuntu/workspace/kashima/test/test.php:0
+[14-Aug-2017 00:03:24 UTC] PHP Fatal error:  Call to undefined function db_con() in /home/ubuntu/workspace/kashima/test/test.php on line 13
+[14-Aug-2017 00:03:24 UTC] PHP Stack trace:
+[14-Aug-2017 00:03:24 UTC] PHP   1. {main}() /home/ubuntu/workspace/kashima/test/test.php:0

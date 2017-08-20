@@ -51,9 +51,8 @@ function get_count($file) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-　<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>鹿島学園イラスト部</title>
-  <link rel="stylesheet" href="">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -80,27 +79,45 @@ function Vote(id, plus) {
 		}, 1000);
 	});
 }
-</script>
 
+// メニューボタンスマホ
+$(function(){
+  $("#toggle").click(function(){
+    $("#menu").slideToggle();
+    return false;
+  });
+  $(window).resize(function(){
+    var win = $(window).width();
+    var p = 480;
+    if(win > p){
+      $("#menu").show();
+    }
+  });
+});
+
+</script>
 </head>
 <body>
-
-
 <!-- header[Start] -->
-<?php include ('header.php'); ?>
+
 <!-- header[End] -->
 
+  <div class="row">
+<!-- sidebar[Start] -->
+<?php include ('sidebar.php'); ?>
+<!-- sidebar[End] -->
 
-<!-- Main[Start] -->
-<!-- work section -->
-<div class="container jumbotron">
+    <div class="col-sm-10 col-sm-offset-2">
+<div class="jumbotron">
 
+<p><a href="all.php"> 管理機能整理 </a></p>
 <p>登録作品一覧</p>
 <section id="works" class="works section no-padding">
     <div class="container-fluid">
         <div class="row no-gutter">
+            
         <?php foreach ((array) $data as $key => $value): ?>
-            <div class="col-lg-3 col-md-4 col-sm-4 work">
+            <div class="col-lg-3 col-md-3 col-sm-3 work">
                 <a href="opendetail.php?id=<?=$value['id'];?>" class="work-box">
                     <img src="<?=$value["img"]?>" alt="">        
     
@@ -121,6 +138,12 @@ function Vote(id, plus) {
     </div>
 </section>
     </div>
+    </div>
+    
+    </div>
+<!-- Main[Start] -->
+<!-- work section -->
+
 <!-- work section --> 
 
 <!-- Main[End] -->

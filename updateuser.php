@@ -9,6 +9,10 @@ $email = $_POST["email"];
 $nickname = $_POST["nickname"];
 // var_dump($_POST);
 
+
+
+     
+
 //2. DB接続します
 include("functions.php");
 
@@ -53,7 +57,7 @@ if($status==false){
   $error = $update->errorInfo();
   exit("ErrorQuery:".$error[2]);
 }else{
-    header("Location: selectbook.php");
+    header("Location: selectwork.php");
     exit;
 
 }

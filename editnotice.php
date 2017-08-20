@@ -16,7 +16,7 @@ $pdo = db_con();
 
 
 //３．データ登録SQL変更
-$stmt = $pdo->prepare("SELECT * FROM kashimawork_table WHERE id=:id");
+$stmt = $pdo->prepare("SELECT * FROM notice WHERE id=:id");
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
 $status = $stmt->execute(); //executeは実行
 

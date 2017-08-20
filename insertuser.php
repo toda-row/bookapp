@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 //1. POSTデータ取得
@@ -9,10 +10,11 @@ $email = $_POST["email"];
 $lpw = $_POST["lpw"];
 
 
+
 //2. DB接続します
 include("functions.php");
 //1.POSTでParamを取得
-$id = $_GET["id"];
+//$id = $_GET["id"];
 
 //2.DB接続など
 $pdo = db_con();
@@ -30,7 +32,7 @@ $stmt = $pdo->prepare("INSERT INTO
             life_flg, 
             date,
             nickname,
-            studentimg
+            userimg
           )VALUES(
             NULL,
             :studentname,
@@ -52,17 +54,7 @@ $status = $stmt->execute();
 
 //executeは実行
 
-//４．データ登録処理後
-if($status==false){
-  //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
-  $error = $stmt->errorInfo();
-  exit("QueryError（SQLのエラー）:".$error[2]);
-}else{
-  //５．index.phpへリダイレクト
-  header("Location: index.1.php"); //Location:　のあとに必ずスペースが必要
-  exit;
 
-}
 
 // メール処理
 
@@ -76,22 +68,23 @@ $opt = '-f'.'yoshihiro.t.88@gmail.com'; //-fって何か意味あったんだけ
 //ヒアドキュメント内ではPHPのプログラムは一切かけない。変数だけ。変数は{}で囲ってあげること
 //メールの本文をここでひとまとめに。
 $message =<<<HTML
-お問い合わせ内容の確認です。
+登録内容の確認です。
 
 お名前
-{$_SESSION['studentname']}
+{$studentname}
 
 キャンパス名
-{$_SESSION['campus']}
+{$campus}
 
 E_mail
-{$_SESSION['email']}
+{$email}
 
 パスワード
-{$_SESSION['lpw']}
+{$lpw}
 
 登録完了しました。
 こちらからログインしてください。
+http://itjoho.jp/kashima/login.php
 
 HTML;
 
@@ -101,7 +94,7 @@ mb_language("ja");
 // 今はUTF-8にしておけばだいたいOKだから、楽な時代になったもんだよ。
 mb_internal_encoding("UTF-8");
 
-mb_send_mail($_SESSION['email'],"【お問い合わせ】確認メール",$message,$add_header,$opt);
+mb_send_mail($email,"【お問い合わせ】確認メール",$message,$add_header,$opt);
 //mb_send_mailは5つの設定項目がある
 //mb_send_mail(送信先メールアドレス,"メールのタイトル","メール本文","メールのヘッダーFromとかリプライとか","送信エラーを送るメールアドレス");
 //5番目の情報は第5引数と呼ばれるものでして、これがないと迷惑メール扱いになることも。
@@ -111,5 +104,17 @@ mb_send_mail($_SESSION['email'],"【お問い合わせ】確認メール",$messa
 //マスター管理者にも同じメールを送りつける！！
 mb_send_mail('yoshihiro.t.88@gmail.com',"登録がありました",$message,$add_header,$opt);
 
+//４．データ登録処理後
+if($status==false){
+  //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
+  $error = $stmt->errorInfo();
+  exit("QueryError（SQLのエラー）:".$error[2]);
+}else{
+  //５．index.phpへリダイレクト
+  //header("Location: index.php"); 
+  //Location:　のあとに必ずスペースが必要
+  exit;
+
+}
 
 ?>
